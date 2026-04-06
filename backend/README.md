@@ -1,3 +1,6 @@
+## Project Structure
+
+```text
 ecommerce-api/
 ├── src/
 │   ├── app.js                 # Express app setup
