@@ -1,21 +1,29 @@
-import pkg from "pg"
-import dotenv from "dotenv"
-const { Pool } = pkg;
-dotenv.config()
+import Sequelize from "sequelize"
+import logger from "../../src/config/logger.js"
 
-console.log(process.env.DB_USER);
-console.log(process.env.DB_HOST);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres", 
+    logging: process.env.NODE_ENV === "development"
+    ? (msg) => logger.debug(msg)
+    : false,
 
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    pool: {
+        max: 5,
+        min: 2,
+        acquire: 30000,
+        idle: 10000
+    },
+
+    define: {
+        underscored: true,
+        timestamps: true,
+        createdAt: "created_at",
+        updatedAt: "updated_at"
+    }
 });
 
-pool.on("connect", () => {
-    console.log("Connection pool established with database")
-});
+sequelize.authenticate()
+    .then(() => logger.info("Database connected"))
+    .catch((err) => log.info("Database connection failed: ", err));
 
-export default pool;
+export default sequelize
