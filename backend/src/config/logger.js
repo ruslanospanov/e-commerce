@@ -4,7 +4,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.join(__filename);
+const __dirname = path.dirname(__filename);
 
 const { NODE_ENV, LOG_LEVEL } = process.env;
 

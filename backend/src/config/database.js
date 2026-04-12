@@ -1,5 +1,5 @@
 import Sequelize from "sequelize"
-import logger from "../../src/config/logger.js"
+import logger from "./logger.js"
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres", 
@@ -24,6 +24,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 sequelize.authenticate()
     .then(() => logger.info("Database connected"))
-    .catch((err) => log.info("Database connection failed: ", err));
+    .catch((err) => logger.info("Database connection failed: ", err));
 
 export default sequelize
