@@ -6,8 +6,8 @@ import authRoutes from './routes/auth.js';
 
 
 import logger from './config/logger.js';
-// import errorHandler from './middleware/errorHandler.js';
 import loggerMiddleware from './middleware/logger.js'
+import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 
@@ -32,5 +32,5 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
-// app.use(errorHandler);
+app.use(errorHandler);
 export default app;

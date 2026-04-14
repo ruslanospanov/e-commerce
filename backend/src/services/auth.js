@@ -67,7 +67,7 @@ class AuthService {
 
         const { accessToken, refreshToken } = this.generateTokens(user.id);
 
-        logger.info(`User logged in ${user.email}`);
+        logger.info(`User logged in with ${user.email}`);
 
         return {
             user: user.toJSON(),
