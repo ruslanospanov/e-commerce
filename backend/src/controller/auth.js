@@ -56,15 +56,16 @@ const verifyResetToken = asyncHandler(async (req, res) => {
 const meProfile = asyncHandler(async (req, res) => {
     const user = await User.findByPk(req.user.id);
 
-        if (!user) {
-            const error = new Error('User not found');
-            error.status = 404;
-            throw error;
-        }
+    if (!user) {
+        const error = new Error('User not found');
+        error.status = 404;
+        throw error;
+    }
 
-        res.status(200).json({
-            message: user
-        });
+    res.status(200).json({
+        message: 'User profile retrieved successfully',
+        data: user
+    });
 });
 
-export { register, login, refreshTokenHandler, verifyResetToken, meProfile, logOut };
+export { register, login, refreshTokenHandler, verifyResetToken, meProfile };

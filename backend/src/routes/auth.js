@@ -6,8 +6,7 @@ import {
     login,
     refreshTokenHandler,
     verifyResetToken,
-    meProfile,
-    logOut
+    meProfile
 } from '../controller/auth.js'
 import { authenticate } from '../middleware/auth.js';
 
