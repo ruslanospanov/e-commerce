@@ -149,15 +149,6 @@ CREATE TABLE reviews (
 CREATE INDEX idx_reviews_product_id ON reviews(product_id);
 CREATE INDEX idx_reviews_user_id    ON reviews(user_id);
 
--- ============================================================
---  TOKEN BLOCKLIST
--- ============================================================
-CREATE TABLE token_blocklist (
-    token      TEXT         NOT NULL PRIMARY KEY,
-    expires_at TIMESTAMPTZ  NOT NULL
-);
-
-CREATE INDEX idx_token_blocklist_expires_at ON token_blocklist(expires_at);
 
 -- ============================================================
 --  AUTO-UPDATE updated_at TRIGGER
