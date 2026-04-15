@@ -1,8 +1,10 @@
 import authServive from '../services/auth.js';
 import asyncHandler from 'express-async-handler';
+import { authenticate } from '../middleware/auth.js';
+import User from '../models/user.js';
 
 const register = asyncHandler(async (req, res) => {
-    const { email, password, name } = req.body;
+    const { email, password, name } = req.validated;
 
     const result = await authServive.register(email, password, name);
 
@@ -13,7 +15,7 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const login = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.validated;
 
     const result = await authServive.login(email, password);
 
@@ -24,7 +26,7 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const refreshTokenHandler = asyncHandler(async (req, res) => {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.validated;
 
     if (!refreshToken) {
         const error = new Error('Refresh token required');
@@ -41,7 +43,7 @@ const refreshTokenHandler = asyncHandler(async (req, res) => {
 });
 
 const verifyResetToken = asyncHandler(async (req, res) => {
-    const { token } = req.body;
+    const { token } = req.validated;
 
     const decoded = authServive.verifyResetToken(token);
 
@@ -51,4 +53,18 @@ const verifyResetToken = asyncHandler(async (req, res) => {
     });
 });
 
-export { register, login, refreshTokenHandler, verifyResetToken };
+const meProfile = asyncHandler(async (req, res) => {
+    const user = await User.findByPk(req.user.id);
+
+        if (!user) {
+            const error = new Error('User not found');
+            error.status = 404;
+            throw error;
+        }
+
+        res.status(200).json({
+            message: user
+        });
+});
+
+export { register, login, refreshTokenHandler, verifyResetToken, meProfile, logOut };

@@ -9,7 +9,7 @@ class AuthService {
         const payload = { id: userId}
 
         const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '24h'
+            expiresIn: '15m'
         });
 
         const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
