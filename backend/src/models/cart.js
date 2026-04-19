@@ -1,17 +1,17 @@
-import { Model, DataType } from 'sequelize'
+import { Model, DataTypes } from 'sequelize'
 import sequelize from '../config/database.js'
 
 class Cart extends Model {}
 
 Cart.init({
     id: {
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
 
     user_id: {
-        type: DataType.UUID,
+        type: DataTypes.UUID,
         references: {
             model: 'user',
             key: 'id'
@@ -19,7 +19,7 @@ Cart.init({
     },
 
     product_id: {
-        type: DataType.UUID,
+        type: DataTypes.UUID,
         references: {
             model: 'products',
             key: 'id'
@@ -28,7 +28,7 @@ Cart.init({
     },
 
     quantity: {
-        type: DataType.INTEGER,
+        type: DataTypes.INTEGER,
         defaultValue: 1,
         validate: {
             min: 1
@@ -41,5 +41,7 @@ Cart.init({
     indexes: [
         { fields: ['user_id']},
         { fields: ['user_id', 'product_id']}
-    ]
+    ] 
 });
+
+export default Cart;
