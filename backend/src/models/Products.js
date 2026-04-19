@@ -78,14 +78,13 @@ Product.init({
 
     review_count: {
         type: DataTypes.INTEGER,
+    },
+
     image_urls: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         defaultValue: []
     },
-        type: DataTypes.INTEGER,
-        defaultValue: []
-    },
-
+        
     is_active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true

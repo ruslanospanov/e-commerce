@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken'
 import  User  from '../models/user.js'
 import logger from '../config/logger.js'
-import asyncHandler from 'express-async-handler'
-import { where } from 'sequelize'
 
 class AuthService {
     generateTokens(userId) {
@@ -19,7 +17,7 @@ class AuthService {
         return { accessToken, refreshToken };
     }
 
-    register = asyncHandler(async(email, password, name) => {
+    register = async(email, password, name) => {
         const existingUser = await User.findOne({ where: {email} });
 
         if (existingUser) {
@@ -43,9 +41,9 @@ class AuthService {
             accessToken,
             refreshToken
         };
-    });
+    };
 
-    login = asyncHandler(async(email, password) => {
+    login = async(email, password) => {
         const user = await User.findOne({ where: { email } });
 
         if (!user) {
@@ -74,9 +72,9 @@ class AuthService {
             accessToken,
             refreshToken
         };
-    });
+    };
 
-    refreshToken = asyncHandler(async (Token) => {
+    refreshToken = async (Token) => {
         const decoded = jwt.verify(Token, process.env.JWT_REFRESH_SECRET);
         const user = await User.findByPk(decoded.id);
 
@@ -91,9 +89,9 @@ class AuthService {
         logger.info(`Token refreshed for user ${user.id}`);
 
         return tokens;
-    });
+    };
 
-    verifyResetToken = asyncHandler(async(token) => {
+    verifyResetToken = async(token) => {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             return decoded;
@@ -102,7 +100,7 @@ class AuthService {
             err.status = 400;
             throw err;
         }
-    });
+    };
 }
 
 export default new AuthService();

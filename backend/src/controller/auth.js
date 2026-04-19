@@ -1,6 +1,5 @@
 import authServive from '../services/auth.js';
 import asyncHandler from 'express-async-handler';
-import { authenticate } from '../middleware/auth.js';
 import User from '../models/user.js';
 
 const register = asyncHandler(async (req, res) => {
@@ -45,7 +44,7 @@ const refreshTokenHandler = asyncHandler(async (req, res) => {
 const verifyResetToken = asyncHandler(async (req, res) => {
     const { token } = req.validated;
 
-    const decoded = authServive.verifyResetToken(token);
+    const decoded = await authServive.verifyResetToken(token);
 
     res.status(200).json({
         message: 'Token is valid',
